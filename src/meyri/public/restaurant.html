@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meyri — Карта столов</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header>
+        <a href="index.html" class="logo">
+            <img src="assets/loga.svg" alt="Meyri">
+        </a>
+        <nav>
+            <a href="index.html">Главная</a>
+            <a href="restaurant.html">Столы</a>
+            <a href="events.html">Мероприятия</a>
+            <a href="about.html">О нас</a>
+        </nav>
+    </header>
+
+    <section class="restaurant-page">
+        <div class="restaurant-header">
+            <h1>Карта ресторана</h1>
+            <p>Выберите столик • Обновляется в реальном времени</p>
+        </div>
+
+        <div id="tables" class="tables-grid"></div>
+    </section>
+
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script>
+        const tablesContainer = document.getElementById('tables');
+        const socket = io();
+
+        let busy = [];
+
+        const tableData = Array.from({ length: 18 }, (_, i) => ({ id: i + 1 }));
+
+        function loadTables() {
+            tablesContainer.innerHTML = '';
+
+            tableData.forEach(table => {
+                const isBooked = busy.includes(table.id);
+
+                const div = document.createElement('a');
+                div.href = `booking.html?table=${table.id}`;
+                div.className = `table-card ${isBooked ? 'booked' : ''}`;
+
+                div.innerHTML = `
+                <span class="table-number">${table.id}</span>
+                <span class="table-status">${isBooked ? 'ЗАНЯТ' : 'СВОБОДЕН'}</span>
+            `;
+
+                tablesContainer.appendChild(div);
+            });
+        }
+
+        socket.on('connect', () => console.log('✅ Socket.IO подключён'));
+        socket.on('updateBusy', (data) => {
+            busy = data || [];
+            console.log('Занятые столы:', busy);
+            loadTables();
+        });
+        socket.on('tableBooked', () => loadTables());
+
+        // Первая загрузка
+        loadTables();
+    </script>
+</body>
+
+</html>

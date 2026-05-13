@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бронирование</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header>
+        <a href="index.html" class="logo">
+            <img src="assets/loga.svg" alt="Meyri">
+        </a>
+        <nav>
+            <a href="restaurant.html">Назад к карте</a>
+        </nav>
+    </header>
+
+    <div class="booking-box">
+        <h1>Бронирование стола</h1>
+        <form id="form">
+            <input type="text" name="name" placeholder="Ваше имя" required>
+            <input type="date" name="date" required>
+            <button type="submit">Забронировать</button>
+        </form>
+    </div>
+
+    <script>
+        const params = new URLSearchParams(location.search);
+        const tableNumber = params.get('table');
+
+        document.getElementById('form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = Object.fromEntries(new FormData(e.target));
+            formData.tableNumber = tableNumber;
+
+            const res = await fetch('/api/book', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
+
+            const result = await res.json();
+
+            if (result.success) {
+                alert(`✅ Столик №${tableNumber} успешно забронирован!`);
+                window.location.href = 'restaurant.html';
+            } else {
+                alert(result.message || 'Ошибка бронирования');
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meyri Events</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="event-bg">
+        <img src="assets/hero.jpg" alt="Meyri Restaurant">
+    </div>
+
+    <header>
+        <a href="index.html" class="logo">
+            <img src="assets/loga.svg" alt="Meyri">
+        </a>
+        <nav>
+            <a href="index.html">Главная</a>
+            <a href="restaurant.html">Столы</a>
+            <a href="events.html">Мероприятия</a>
+            <a href="about.html">О нас</a>
+        </nav>
+    </header>
+
+    <section class="event-page">
+        <div class="event-content">
+            <span class="event-badge">MEYRI EVENTS</span>
+            <h1>Организация незабываемых мероприятий</h1>
+            <p class="event-subtitle">
+                Свадьбы • Корпоративы • Закрытые вечеринки •<br>
+                День рождения • Аренда всего зала
+            </p>
+            <div class="event-highlights">
+                <div>Премиальный сервис</div>
+                <div>Индивидуальный подход</div>
+                <div>Уникальная атмосфера</div>
+            </div>
+        </div>
+
+        <div class="event-form-box">
+            <h2>Оставить заявку</h2>
+            <form id="eventForm">
+                <div class="form-grid">
+                    <input type="text" placeholder="Ваше имя" required>
+                    <input type="tel" placeholder="Телефон" required>
+                </div>
+                <input type="email" placeholder="E-mail" required>
+                <div class="form-grid">
+                    <input type="number" placeholder="Кол-во гостей" required>
+                    <input type="date" required>
+                </div>
+                <textarea placeholder="Дополнительная информация (дата события, пожелания, бюджет и т.д.)"
+                    rows="4"></textarea>
+
+                <button type="submit">Отправить заявку</button>
+            </form>
+        </div>
+    </section>
+
+    <script>
+        document.getElementById('eventForm').onsubmit = (e) => {
+            e.preventDefault();
+            alert('✅ Спасибо! Ваша заявка успешно отправлена.\nМы свяжемся с вами в ближайшее время.');
+            e.target.reset();
+        };
+    </script>
+</body>
+
+</html>

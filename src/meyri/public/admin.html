@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+    <div class="booking-box">
+
+        <h1>Вход</h1>
+
+        <form id="loginForm">
+
+            <input type="text" name="login" placeholder="login">
+
+            <input type="password" name="password" placeholder="password">
+
+            <button>
+                Войти
+            </button>
+
+        </form>
+
+    </div>
+
+    <div class="admin" id="admin" style="display:none;">
+
+        <h1>Брони</h1>
+
+        <table class="admin-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>Стол</th>
+                    <th>Имя</th>
+                    <th>Дата</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="tbody"></tbody>
+
+        </table>
+
+    </div>
+
+    <script>
+
+        const form =
+            document.getElementById(
+                'loginForm'
+            );
+
+        form.addEventListener(
+            'submit',
+            async (e) => {
+
+                e.preventDefault();
+
+                const data =
+                    Object.fromEntries(
+                        new FormData(form)
+                    );
+
+                const res =
+                    await fetch('/api/login', {
+
+                        method: 'POST',
+
+                        headers: {
+                            'Content-Type':
+                                'application/json'
+                        },
+
+                        body: JSON.stringify(data)
+
+                    });
+
+                const result =
+                    await res.json();
+
+                if (result.success) {
+
+                    document
+                        .querySelector('.booking-box')
+                        .style.display = 'none';
+
+                    document
+                        .getElementById('admin')
+                        .style.display = 'block';
+
+                    loadBookings();
+
+                } else {
+
+                    alert('Ошибка');
+
+                }
+
+            });
+
+        async function loadBookings() {
+
+            const res =
+                await fetch(
+                    '/api/admin/bookings'
+                );
+
+            const data =
+                await res.json();
+
+            const tbody =
+                document.getElementById(
+                    'tbody'
+                );
+
+            tbody.innerHTML = '';
+
+            data.forEach(item => {
+
+                tbody.innerHTML += `
+
+<tr>
+
+<td>
+${item.tableNumber}
+</td>
+
+<td>
+${item.name}
+</td>
+
+<td>
+${item.date}
+</td>
+
+</tr>
+
+`;
+
+            });
+
+        }
+
+    </script>
+
+</body>
+
+</html>

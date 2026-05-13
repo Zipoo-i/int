@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meyri — Premium Restaurant</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <a href="index.html" class="logo">
+            <img src="assets/loga.svg" alt="Meyri">
+        </a>
+        <nav>
+            <a href="restaurant.html">Столы</a>
+            <a href="events.html">Мероприятия</a>
+            <a href="about.html">О нас</a>
+        </nav>
+    </header>
+
+    <section class="hero-page">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <span class="premium-badge">PREMIUM DIGITAL RESTAURANT</span>
+            <h1>Meyri</h1>
+            <p class="hero-desc">
+                Изысканная атмосфера • Живое бронирование • Авторская кухня
+            </p>
+            <div class="hero-buttons">
+                <a href="restaurant.html" class="hero-btn primary">Открыть ресторан</a>
+                <a href="events.html" class="hero-btn secondary">Мероприятия</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="home-cards">
+        <a href="restaurant.html" class="home-card first">
+            <div class="card-bg"></div>
+            <div class="card-content">
+                <h2>Restaurant</h2>
+                <p>Выберите столик и забронируйте онлайн</p>
+            </div>
+        </a>
+        <a href="events.html" class="home-card second">
+            <div class="card-bg"></div>
+            <div class="card-content">
+                <h2>Events</h2>
+                <p>Свадьбы, корпоративы, закрытые вечеринки</p>
+            </div>
+        </a>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.hero-content > *, .home-card').forEach((el, i) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(40px)';
+                setTimeout(() => {
+                    el.style.transition = 'all 1s cubic-bezier(0.25, 0.1, 0.25, 1)';
+                    el.style.transitionDelay = `${i * 150}ms`;
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, 300);
+            });
+        });
+    </script>
+</body>
+
+</html>
